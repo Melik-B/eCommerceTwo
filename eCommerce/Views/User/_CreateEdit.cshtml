@@ -1,0 +1,115 @@
+﻿﻿@using Business.Models
+@using DataAccess.Enums
+
+@model UserModel
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input asp-for="Id" type="hidden" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row mb-3">
+                <label asp-for="FirstName" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="LastName" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="Username" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="Password" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="Password" class="form-control" type="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="RoleId" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <select asp-for="RoleId" class="form-control" asp-items="ViewBag.RolId">
+                        <option value="">-- Seçiniz --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="IsActive" class="col-2 col-form-label"></label>
+                <div class="col-5" style="padding-top: 7px;">
+                    <input class="form-check-input" asp-for="IsActive" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="UserDetails.Gender" class="col-2 col-form-label"></label>
+                <div class="col-5" style="padding-top: 7px;">
+                    @if (Model.UserDetails.Gender == Gender.Female)
+                    {
+                        <input asp-for="UserDetails.Gender" type="radio" value="@((int)Gender.Female)" checked /> @Gender.Female
+                    }
+                    else
+                    {
+                        <input asp-for="UserDetails.Gender" type="radio" value="@((int)Gender.Female)" /> @Gender.Female
+                    }
+                    &nbsp;
+                    @if (Model.UserDetails.Gender == Gender.Male)
+                    {
+                        <input asp-for="UserDetails.Gender" type="radio" value="@((int)Gender.Male)" checked /> @Gender.Male
+                    }
+                    else
+                    {
+                        <input asp-for="UserDetails.Gender" type="radio" value="@((int)Gender.Male)" /> @Gender.Male
+                    }
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="UserDetails.Email" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="UserDetails.Email" class="form-control" type="email" />
+                    <span asp-validation-for="UserDetails.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="UserDetails.CountryId" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <select asp-for="UserDetails.CountryId" class="form-control" asp-items="ViewBag.CountrId" id="countries">
+                        <option value="">-- Seçiniz --</option>
+                    </select>
+                    <span asp-validation-for="UserDetails.CountryId" class="text-danger" id="countriesmesaj"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="UserDetails.CityId" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <select asp-for="UserDetails.CityId" class="form-control" id="sehirler" asp-items="ViewBag.CityId">
+                        <option value="">-- Ülke Seçiniz --</option>
+                    </select>
+                    <span asp-validation-for="UserDetails.CityId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="offset-2 col-5">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    &nbsp;&nbsp;
+                    <button type="reset" class="btn btn-outline-primary">Clear</button>
+                    &nbsp;&nbsp;
+                    <a asp-action="Index">User List</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

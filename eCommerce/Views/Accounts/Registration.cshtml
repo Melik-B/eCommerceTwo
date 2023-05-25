@@ -1,0 +1,159 @@
+﻿﻿@using Business.Models
+@using DataAccess.Enums
+
+@model UserRegistrationModel
+
+@{
+    ViewData["Title"] = "Kullanıcı Kayıt";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-12">
+        <form asp-action="Kayit">
+            @Html.AntiForgeryToken()
+            @if (ViewBag.Mesaj != null)
+            {
+                <p class="text-danger">
+                    @ViewBag.Mesaj
+                </p>
+            }
+            <div class="row mb-3">
+                <label asp-for="FirstName" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="LastName" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="Username" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="Password" class="col-2 col-form-label"></label>
+                <div class="col-4">
+                    <input asp-for="Password" class="form-control" type="password" id="sifre" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="col-1">
+                    <a id="sifregostergizle" href="#" title="Şifre Göster / Gizle"><i class="far fa-eye"></i></a>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="PasswordConfirmation" class="col-2 col-form-label"></label>
+                <div class="col-4">
+                    <input asp-for="PasswordConfirmation" class="form-control" type="password" id="sifreonay" />
+                    <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
+                </div>
+                <div class="col-1">
+                    <a id="sifreonaygostergizle" href="#" title="Şifre Onay Göster / Gizle"><i class="far fa-eye"></i></a>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="UserDetails.Gender" class="col-2 col-form-label"></label>
+                <div class="col-5" style="padding-top:7px;">
+                    <input asp-for="UserDetails.Gender" type="radio" value="@((int)Gender.Female)" checked /> @Gender.Female
+                    &nbsp;
+                    <input asp-for="UserDetails.Gender" type="radio" value="@((int)Gender.Male)" /> @Gender.Male
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="UserDetails.Email" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <input asp-for="UserDetails.Email" class="form-control" type="email" />
+                    <span asp-validation-for="UserDetails.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="UserDetails.CountryId" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <select asp-for="UserDetails.CountryId" class="form-control" asp-items="ViewBag.CountryId" id="countries">
+                        <option value="">-- Seçiniz --</option>
+                    </select>
+                    <span asp-validation-for="UserDetails.CountryId" class="text-danger" id="countriesmesaj"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="UserDetails.CityId" class="col-2 col-form-label"></label>
+                <div class="col-5">
+                    <select asp-for="UserDetails.CityId" class="form-control" id="sehirler" asp-items="ViewBag.CityId">
+                        <option value="">-- Ülke Seçiniz --</option>
+                    </select>
+                    <span asp-validation-for="UserDetails.CityId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="offset-2 col-5">
+                    <input type="submit" value="Kaydet" class="btn btn-primary" />
+                    &nbsp;&nbsp;
+                    <button type="reset" class="btn btn-outline-primary">Temizle</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script src="/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script>
+        $(function () {
+            $("#countries").off("change");
+            $("#countries").change(function () {
+                $("#cities").empty();
+                $("#countriesmessage").text("");
+                var selectedCountryId = $("#countries").val();
+
+                if (selectedCountryId === "") {
+                    $("#countriesmessage").text("Lütfen ülke seçiniz...");
+                    $("#cities").append('<option value="">-- Ülke Seçiniz --</option>');
+                } else {
+
+                    $.getJSON(
+                        "/CitiesAjax/CitiesGet",
+                        { countryId : selectedCountryId },
+
+                        function (cities) {
+                            $("#cities").append('<option value="">-- Şehir Seçiniz --</option>');
+                            for (var i = 0; i < cities.length; i++) {
+                                $("#cities").append('<option value="' + cities[i].id + '">' + cities[i].adi + '</option>');
+                            }
+                        }
+                    );
+                }
+            });
+
+            var sifreGoster = false;
+            $(document).on('click', '#sifregostergizle', function (event) {
+                event.preventDefault();
+                sifreGoster = !sifreGoster;
+                if (sifreGoster)
+                    $("#sifre").prop("type", "text");
+                else
+                    $("#sifre").prop("type", "password");
+            });
+
+            var sifreOnayGoster = false;
+            $(document).on('click', '#sifreonaygostergizle', function (event) {
+                event.preventDefault();
+                sifreOnayGoster = !sifreOnayGoster;
+                if (sifreOnayGoster)
+                    $("#sifreonay").prop("type", "text");
+                else
+                    $("#sifreonay").prop("type", "password");
+            });
+        });
+    </script>
+}

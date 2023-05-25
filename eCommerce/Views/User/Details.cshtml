@@ -1,0 +1,86 @@
+﻿﻿@using Business.Models
+@model UserModel
+
+@{
+    ViewData["Title"] = "User Detail";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model == null)
+{
+    <partial name="_Result" />
+}
+else
+{
+    <div>
+        <h4>User</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-2">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+            <dd class="col-10">
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+            <dt class="col-2">
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+            <dd class="col-10">
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+            <dt class="col-2">
+                @Html.DisplayNameFor(model => model.Username)
+            </dt>
+            <dd class="col-10">
+                @Html.DisplayFor(model => model.Username)
+            </dd>
+            <dt class="col-2">
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
+            <dd class="col-10">
+                @Html.DisplayFor(model => model.Password)
+            </dd>
+            <dt class="col-2">
+                @Html.DisplayNameFor(model => model.RoleNameDisplay)
+            </dt>
+            <dd class="col-10">
+                @Html.DisplayFor(model => model.RoleNameDisplay)
+            </dd>
+            <dt class="col-2">
+                @Html.DisplayNameFor(model => model.IsActiveDisplay)
+            </dt>
+            <dd class="col-10">
+                @Html.DisplayFor(model => model.IsActiveDisplay)
+            </dd>
+            <dt class="col-2">
+                @Html.DisplayNameFor(model => model.UserDetails.Gender)
+            </dt>
+            <dd class="col-10">
+                @Html.DisplayFor(model => model.UserDetails.Gender)
+            </dd>
+            <dt class="col-2">
+                @Html.DisplayNameFor(model => model.UserDetails.Email)
+            </dt>
+            <dd class="col-10">
+                @Html.DisplayFor(model => model.UserDetails.Email)
+            </dd>
+            <dt class="col-2">
+                @Html.DisplayNameFor(model => model.UserDetails.CountryNameDisplay)
+            </dt>
+            <dd class="col-10">
+                @Html.DisplayFor(model => model.UserDetails.CountryNameDisplay)
+            </dd>
+            <dt class="col-2">
+                @Html.DisplayNameFor(model => model.UserDetails.CityNameDisplay)
+            </dt>
+            <dd class="col-10">
+                @Html.DisplayFor(model => model.UserDetails.CityNameDisplay)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>&nbsp;|&nbsp;
+        <a asp-action="Index">User List</a>
+    </div>
+}
