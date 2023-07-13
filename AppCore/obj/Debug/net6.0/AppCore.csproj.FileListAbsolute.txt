@@ -1,0 +1,12 @@
+C:\Business\Bitirme Projesi\AppCore\bin\Debug\net6.0\AppCore.deps.json
+C:\Business\Bitirme Projesi\AppCore\bin\Debug\net6.0\AppCore.dll
+C:\Business\Bitirme Projesi\AppCore\bin\Debug\net6.0\AppCore.pdb
+C:\Business\Bitirme Projesi\AppCore\obj\Debug\net6.0\AppCore.csproj.AssemblyReference.cache
+C:\Business\Bitirme Projesi\AppCore\obj\Debug\net6.0\AppCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Business\Bitirme Projesi\AppCore\obj\Debug\net6.0\AppCore.AssemblyInfoInputs.cache
+C:\Business\Bitirme Projesi\AppCore\obj\Debug\net6.0\AppCore.AssemblyInfo.cs
+C:\Business\Bitirme Projesi\AppCore\obj\Debug\net6.0\AppCore.csproj.CoreCompileInputs.cache
+C:\Business\Bitirme Projesi\AppCore\obj\Debug\net6.0\AppCore.dll
+C:\Business\Bitirme Projesi\AppCore\obj\Debug\net6.0\refint\AppCore.dll
+C:\Business\Bitirme Projesi\AppCore\obj\Debug\net6.0\AppCore.pdb
+C:\Business\Bitirme Projesi\AppCore\obj\Debug\net6.0\ref\AppCore.dll

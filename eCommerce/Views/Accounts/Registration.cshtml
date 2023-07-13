@@ -78,16 +78,16 @@
             <div class="row mb-3">
                 <label asp-for="UserDetails.CountryId" class="col-2 col-form-label"></label>
                 <div class="col-5">
-                    <select asp-for="UserDetails.CountryId" class="form-control" asp-items="ViewBag.CountryId" id="countries">
+                    <select asp-for="UserDetails.CountryId" class="form-control" asp-items="ViewBag.CountryId" id="ulkeler">
                         <option value="">-- Seçiniz --</option>
                     </select>
-                    <span asp-validation-for="UserDetails.CountryId" class="text-danger" id="countriesmesaj"></span>
+                    <span asp-validation-for="UserDetails.CountryId" class="text-danger" id="ulkelermesaj"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <label asp-for="UserDetails.CityId" class="col-2 col-form-label"></label>
                 <div class="col-5">
-                    <select asp-for="UserDetails.CityId" class="form-control" id="sehirler" asp-items="ViewBag.CityId">
+                    <select asp-for="UserDetails.CityId" class="form-control" id="sehirler" asp-items="ViewBag.SehirId">
                         <option value="">-- Ülke Seçiniz --</option>
                     </select>
                     <span asp-validation-for="UserDetails.CityId" class="text-danger"></span>
@@ -106,24 +106,24 @@
 
 @section Scripts
     {
-    <script src="/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
 
     <script>
         $(function () {
             $("#countries").off("change");
             $("#countries").change(function () {
                 $("#cities").empty();
-                $("#countriesmessage").text("");
+                $("#countriesMessage").text("");
                 var selectedCountryId = $("#countries").val();
 
                 if (selectedCountryId === "") {
-                    $("#countriesmessage").text("Lütfen ülke seçiniz...");
+                    $("#countriesMessage").text("Lütfen ülke seçiniz...");
                     $("#cities").append('<option value="">-- Ülke Seçiniz --</option>');
                 } else {
 
                     $.getJSON(
                         "/CitiesAjax/CitiesGet",
-                        { countryId : selectedCountryId },
+                        { countryId: selectedCountryId },
 
                         function (cities) {
                             $("#cities").append('<option value="">-- Şehir Seçiniz --</option>');
@@ -135,25 +135,25 @@
                 }
             });
 
-            var sifreGoster = false;
-            $(document).on('click', '#sifregostergizle', function (event) {
-                event.preventDefault();
-                sifreGoster = !sifreGoster;
-                if (sifreGoster)
-                    $("#sifre").prop("type", "text");
-                else
-                    $("#sifre").prop("type", "password");
-            });
+            //var sifreGoster = false;
+            //$(document).on('click', '#sifregostergizle', function (event) {
+            //    event.preventDefault();
+            //    sifreGoster = !sifreGoster;
+            //    if (sifreGoster)
+            //        $("#sifre").prop("type", "text");
+            //    else
+            //        $("#sifre").prop("type", "password");
+            //});
 
-            var sifreOnayGoster = false;
-            $(document).on('click', '#sifreonaygostergizle', function (event) {
-                event.preventDefault();
-                sifreOnayGoster = !sifreOnayGoster;
-                if (sifreOnayGoster)
-                    $("#sifreonay").prop("type", "text");
-                else
-                    $("#sifreonay").prop("type", "password");
-            });
+            //var sifreOnayGoster = false;
+            //$(document).on('click', '#sifreonaygostergizle', function (event) {
+            //    event.preventDefault();
+            //    sifreOnayGoster = !sifreOnayGoster;
+            //    if (sifreOnayGoster)
+            //        $("#sifreonay").prop("type", "text");
+            //    else
+            //        $("#sifreonay").prop("type", "password");
+            //});
         });
     </script>
 }

@@ -15,7 +15,7 @@ namespace DataAccess.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = @"server=MELIK\SQLEXPRESS;database=eCommerceEleven;trusted_connection=true;multipleactiveresultsets=true;TrustServerCertificate=True";
+            string connectionString = @"server=MELIK\SQLEXPRESS;database=eCommerce;trusted_connection=true;multipleactiveresultsets=true;TrustServerCertificate=True";
 
             optionsBuilder.UseSqlServer(connectionString);
         }
