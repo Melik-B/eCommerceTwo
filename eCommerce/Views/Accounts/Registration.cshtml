@@ -1,159 +1,138 @@
 ﻿﻿@using Business.Models
-@using DataAccess.Enums
-
+@using DataAccess.Enums;
 @model UserRegistrationModel
 
-@{
-    ViewData["Title"] = "Kullanıcı Kayıt";
-}
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>@ViewData["Title"]</h1>
-<hr />
-<div class="row">
-    <div class="col-12">
-        <form asp-action="Kayit">
-            @Html.AntiForgeryToken()
-            @if (ViewBag.Mesaj != null)
-            {
-                <p class="text-danger">
-                    @ViewBag.Mesaj
-                </p>
-            }
-            <div class="row mb-3">
-                <label asp-for="FirstName" class="col-2 col-form-label"></label>
-                <div class="col-5">
-                    <input asp-for="FirstName" class="form-control" />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Zamazor - Register</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            </div>
+                            <form asp-action="Registration" class="user">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input asp-for="FirstName" type="text" class="form-control form-control-user" id="exampleFirstName"
+                                               placeholder="First Name">
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input asp-for="LastName" type="text" class="form-control form-control-user" id="exampleLastName"
+                                               placeholder="Last Name">
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="Username" type="text" class="form-control form-control-user" id="exampleFirstName"
+                                           placeholder="Username">
+                                    <span asp-validation-for="Username" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="Email" type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                           placeholder="Email Address">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input asp-for="Password" type="password" class="form-control form-control-user"
+                                               id="exampleInputPassword" placeholder="Password">
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input asp-for="PasswordConfirmation" type="password" class="form-control form-control-user"
+                                               id="exampleRepeatPassword" placeholder="Repeat Password">
+                                        <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @*<label asp-for="UserDetails.Gender" class="col-2 col-form-label"></label>*@
+                                    <div class="col-5" style="padding-top:7px;">
+                                        <input asp-for="UserDetails.Gender" type="radio" value="@((int)Gender.Female)" checked /> @Gender.Female
+                                        &nbsp;
+                                        <input asp-for="UserDetails.Gender" type="radio" value="@((int)Gender.Male)" /> @Gender.Male
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="UserDetails.CountryId" class="col-2 col-form-label"></label>
+                                    <div class="col-5">
+                                        <select asp-for="UserDetails.CountryId" class="form-control">
+                                            <option value="">-- Seçiniz --</option>
+                                        </select>
+                                        <span asp-validation-for="UserDetails.CountryId" class="text-danger" id="ulkelermesaj"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="UserDetails.CityId" class="col-2 col-form-label"></label>
+                                    <div class="col-5">
+                                        <select asp-for="UserDetails.CityId" class="form-control" id="sehirler" asp-items="ViewBag.SehirId">
+                                            <option value="">-- Ülke Seçiniz --</option>
+                                        </select>
+                                        <span asp-validation-for="UserDetails.CityId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-user btn-block" value="Register Account" />
+                                <hr>
+                                <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Register with Google
+                                </a>
+                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                                </a>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="login.html">Already have an account? Login!</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row mb-3">
-                <label asp-for="LastName" class="col-2 col-form-label"></label>
-                <div class="col-5">
-                    <input asp-for="LastName" class="form-control" />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label asp-for="Username" class="col-2 col-form-label"></label>
-                <div class="col-5">
-                    <input asp-for="Username" class="form-control" />
-                    <span asp-validation-for="Username" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label asp-for="Password" class="col-2 col-form-label"></label>
-                <div class="col-4">
-                    <input asp-for="Password" class="form-control" type="password" id="sifre" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="col-1">
-                    <a id="sifregostergizle" href="#" title="Şifre Göster / Gizle"><i class="far fa-eye"></i></a>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label asp-for="PasswordConfirmation" class="col-2 col-form-label"></label>
-                <div class="col-4">
-                    <input asp-for="PasswordConfirmation" class="form-control" type="password" id="sifreonay" />
-                    <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
-                </div>
-                <div class="col-1">
-                    <a id="sifreonaygostergizle" href="#" title="Şifre Onay Göster / Gizle"><i class="far fa-eye"></i></a>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label asp-for="UserDetails.Gender" class="col-2 col-form-label"></label>
-                <div class="col-5" style="padding-top:7px;">
-                    <input asp-for="UserDetails.Gender" type="radio" value="@((int)Gender.Female)" checked /> @Gender.Female
-                    &nbsp;
-                    <input asp-for="UserDetails.Gender" type="radio" value="@((int)Gender.Male)" /> @Gender.Male
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label asp-for="UserDetails.Email" class="col-2 col-form-label"></label>
-                <div class="col-5">
-                    <input asp-for="UserDetails.Email" class="form-control" type="email" />
-                    <span asp-validation-for="UserDetails.Email" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label asp-for="UserDetails.CountryId" class="col-2 col-form-label"></label>
-                <div class="col-5">
-                    <select asp-for="UserDetails.CountryId" class="form-control" asp-items="ViewBag.CountryId" id="ulkeler">
-                        <option value="">-- Seçiniz --</option>
-                    </select>
-                    <span asp-validation-for="UserDetails.CountryId" class="text-danger" id="ulkelermesaj"></span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label asp-for="UserDetails.CityId" class="col-2 col-form-label"></label>
-                <div class="col-5">
-                    <select asp-for="UserDetails.CityId" class="form-control" id="sehirler" asp-items="ViewBag.SehirId">
-                        <option value="">-- Ülke Seçiniz --</option>
-                    </select>
-                    <span asp-validation-for="UserDetails.CityId" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="offset-2 col-5">
-                    <input type="submit" value="Kaydet" class="btn btn-primary" />
-                    &nbsp;&nbsp;
-                    <button type="reset" class="btn btn-outline-primary">Temizle</button>
-                </div>
-            </div>
-        </form>
+        </div>
+
     </div>
-</div>
 
-@section Scripts
-    {
-    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        $(function () {
-            $("#countries").off("change");
-            $("#countries").change(function () {
-                $("#cities").empty();
-                $("#countriesMessage").text("");
-                var selectedCountryId = $("#countries").val();
+    <!-- Core plugin JavaScript-->
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                if (selectedCountryId === "") {
-                    $("#countriesMessage").text("Lütfen ülke seçiniz...");
-                    $("#cities").append('<option value="">-- Ülke Seçiniz --</option>');
-                } else {
+    <!-- Custom scripts for all pages-->
+    <script src="~/js/sb-admin-2.min.js"></script>
+</body>
 
-                    $.getJSON(
-                        "/CitiesAjax/CitiesGet",
-                        { countryId: selectedCountryId },
-
-                        function (cities) {
-                            $("#cities").append('<option value="">-- Şehir Seçiniz --</option>');
-                            for (var i = 0; i < cities.length; i++) {
-                                $("#cities").append('<option value="' + cities[i].id + '">' + cities[i].adi + '</option>');
-                            }
-                        }
-                    );
-                }
-            });
-
-            //var sifreGoster = false;
-            //$(document).on('click', '#sifregostergizle', function (event) {
-            //    event.preventDefault();
-            //    sifreGoster = !sifreGoster;
-            //    if (sifreGoster)
-            //        $("#sifre").prop("type", "text");
-            //    else
-            //        $("#sifre").prop("type", "password");
-            //});
-
-            //var sifreOnayGoster = false;
-            //$(document).on('click', '#sifreonaygostergizle', function (event) {
-            //    event.preventDefault();
-            //    sifreOnayGoster = !sifreOnayGoster;
-            //    if (sifreOnayGoster)
-            //        $("#sifreonay").prop("type", "text");
-            //    else
-            //        $("#sifreonay").prop("type", "password");
-            //});
-        });
-    </script>
-}
+</html>
